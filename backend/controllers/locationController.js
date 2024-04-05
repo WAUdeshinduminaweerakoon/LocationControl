@@ -32,3 +32,20 @@ exports.getAllLocation = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+exports.deleteLocation = async (req, res) => {
+console.log("herouhbu");
+    try {
+    console.log("try");
+        const existingLocation = await LocationModel.findOne({id : req.body.id , humanReadableName : req.body.humanReadableName});
+
+        if (existingLocation){
+            await LocationModel.deleteOne({id : req.body.id})
+//            res.status().json("Unautho");
+            return res.status(200).json(await NoteModel.find({humanReadableName : req.body.humanReadableName}));
+        }else {
+            res.status(403).json("Unauthorized");
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
