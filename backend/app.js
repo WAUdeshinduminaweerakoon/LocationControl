@@ -1,13 +1,13 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const locationRoutes = require('./routes/locationRoutes');
-const cors = require('cors')
+const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
-app.use(cors())
-
+app.use(cors());
 app.use(express.json());
+//console.log("eeeeeeeeeeeeee")
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
@@ -19,8 +19,6 @@ mongoose.connect(process.env.MONGODB_URL, {
 });
 
 // Routes
-
 app.use("/location", locationRoutes);
-
 
 module.exports = app;

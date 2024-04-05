@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const locationSchema = new mongoose.Schema({
+
     humanReadableName:{
         type: String,
         required: true

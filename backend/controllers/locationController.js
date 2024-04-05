@@ -1,19 +1,22 @@
-const LocationModel = require("../models/LocationModel")
+const LocationModel = require("../models/LocationModel");
 
 exports.createLocation = async (req, res) => {
     try {
-        const location = req.body.location;
-        const existingLocation = await LocationModel.findOne({ location: humanReadableName });
-        if (existingUser) {
-            return res.status(401).json({ message: "location already exists" });
+         //console.log("rttttttt")
+        const { humanReadableName, address, phone, multipleADevices } = req.body;
 
+        // location already exists check
+        const existingLocation = await LocationModel.findOne({ humanReadableName });
+        if (existingLocation) {
+            return res.status(401).json({ message: "Location already exists" });
         }
 
+        // Create a new location
         const newLocation = new LocationModel({
-            humanReadableName: humanReadableName,
-            address: req.body.address,
-            phone: req.body.phone,
-            multipleADevices: req.body.multipleADevices
+            humanReadableName,
+            address,
+            phone,
+            multipleADevices
         });
         const savedLocation = await newLocation.save();
         res.json(savedLocation);
