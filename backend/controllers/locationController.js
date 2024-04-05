@@ -24,3 +24,11 @@ exports.createLocation = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+exports.getAllLocation = async (req, res) => {
+    try {
+        const locations = await LocationModel.find();
+        res.json(locations);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
