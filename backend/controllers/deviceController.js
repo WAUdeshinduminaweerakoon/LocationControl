@@ -25,3 +25,11 @@ exports.createDevice = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+exports.getAllDevice = async (req, res) => {
+    try {
+        const device = await DeviceModel.find();
+        res.json(device);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
