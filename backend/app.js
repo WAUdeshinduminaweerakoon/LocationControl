@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const locationRoutes = require('./routes/locationRoutes');
+const DeviceRoutes = require('./routes/deviceRoutes')
 const cors = require('cors');
 require('dotenv').config();
 
@@ -20,5 +21,7 @@ mongoose.connect(process.env.MONGODB_URL, {
 
 // Routes
 app.use("/location", locationRoutes);
+app.use("/device", DeviceRoutes);
+
 
 module.exports = app;

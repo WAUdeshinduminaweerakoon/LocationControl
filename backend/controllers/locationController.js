@@ -41,7 +41,7 @@ console.log("herouhbu");
         if (existingLocation){
             await LocationModel.deleteOne({id : req.body.id})
 //            res.status().json("Unautho");
-            return res.status(200).json(await NoteModel.find({humanReadableName : req.body.humanReadableName}));
+            return res.status(200).json(await LocationModel.find({humanReadableName : req.body.humanReadableName}));
         }else {
             res.status(403).json("Unauthorized");
         }
