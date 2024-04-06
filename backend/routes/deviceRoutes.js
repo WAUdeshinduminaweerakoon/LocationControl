@@ -4,6 +4,4 @@ const deviceController = require('../controllers/deviceController');
 
 router.post('/', deviceController.createDevice);
 
-
-
 module.exports = router;

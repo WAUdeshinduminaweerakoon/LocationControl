@@ -1,17 +1,18 @@
-const deviceModel = require("../models/DeviceModel");
+const DeviceModel = require("../models/DeviceModel");
 
 exports.createDevice = async (req, res) => {
     try {
-         //console.log("createDevice ")
+         console.log("createDevice ")
         const { uniqueSerialNumber, type, image, status } = req.body;
 
-        // location already exists check
+        // device already exists check
         const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber });
         if (existingDevice) {
+        console.log("createDevice gyeyy ")
             return res.status(401).json({ message: "uniqueSerialNumber already exists" });
         }
 
-        // Create a new location
+        // Create a new device
         const newDevice = new DeviceModel({
             uniqueSerialNumber,
             type,
