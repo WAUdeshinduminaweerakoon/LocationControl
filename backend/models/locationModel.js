@@ -19,11 +19,6 @@ const locationSchema = new mongoose.Schema({
     phone:{
         type: String,
         required: true
-    },
-    multipleADevices:{
-        type: String,
-        required: true
-
     }
 });
 const LocationModel = mongoose.model('Location', locationSchema);

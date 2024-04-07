@@ -20,6 +20,7 @@ const deviceSchema = new mongoose.Schema({
         enum: ['active', 'inactive'],
         default: 'active'
     }
+
 });
 const DeviceModel = mongoose.model('Device', deviceSchema);
 
