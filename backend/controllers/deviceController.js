@@ -8,6 +8,7 @@ exports.createDevice = async (req, res) => {
 
         if (!uniqueSerialNumber || !type || !image || !status || !locationId) {
             return res.status(400).json({ message: "All fields are required" });
+
         }
 
         const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber });
