@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const locationSchema = new mongoose.Schema({
+    locationId: {
+        type: Number,
+        required: true
+    },
 
     humanReadableName:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     address:{
         type: String,

@@ -33,3 +33,20 @@ exports.getAllDevice = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+exports.deleteDevice = async (req, res) => {
+console.log("deleteDevice");
+    try {
+    console.log("try");
+        const existingDevice = await DeviceModel.findOne({id : req.body.id , uniqueSerialNumber: req.body.uniqueSerialNumber});
+
+        if (existingDevice){
+            await DeviceModel.deleteOne({id : req.body.id})
+//            res.status().json("Unautho");
+            return res.status(200).json(await DeviceModel.find({uniqueSerialNumber : req.body.uniqueSerialNumber}));
+        }else {
+            res.status(403).json("Unauthorized");
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
