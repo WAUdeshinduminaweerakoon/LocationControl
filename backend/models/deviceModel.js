@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
 const deviceSchema = new mongoose.Schema({
     uniqueSerialNumber:{
         type: String,
@@ -18,7 +21,7 @@ const deviceSchema = new mongoose.Schema({
         default: 'active'
     },
     locationId:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Location',
         required: true
     }
