@@ -1,7 +1,4 @@
-const mongoose = require('mongoose');
-
 const deviceSchema = new mongoose.Schema({
-
     uniqueSerialNumber:{
         type: String,
         required: true
@@ -19,8 +16,12 @@ const deviceSchema = new mongoose.Schema({
         type: String,
         enum: ['active', 'inactive'],
         default: 'active'
+    },
+    locationId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Location',
+        required: true
     }
-
 });
 const DeviceModel = mongoose.model('Device', deviceSchema);
 

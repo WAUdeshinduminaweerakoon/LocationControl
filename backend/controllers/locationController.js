@@ -2,36 +2,32 @@ const LocationModel = require("../models/LocationModel");
 const CounterModel = require("../models/CounterModel");
 
 
-exports.createLocation = async (req, res) => {
+exports.createDevice = async (req, res) => {
     try {
-        const { humanReadableName, address, phone, multipleADevices } = req.body;
+        const { uniqueSerialNumber, type, image, status, locationId } = req.body;
 
+        const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber });
+        if (existingDevice) {
+            return res.status(401).json({ message: "uniqueSerialNumber already exists" });
+        }
 
-         const existingLocation = await LocationModel.findOne({ humanReadableName });
-                if (existingLocation) {
-                    return res.status(401).json({ message: "Location already exists" });
-                }
+        const newDevice = new DeviceModel({ uniqueSerialNumber, type, image, status, locationId });
+        const savedDevice = await newDevice.save();
 
-        const counter = await CounterModel.findOneAndUpdate(
-            { _id: "locationId" },
-            { $inc: { seq: 1 } },
-            { new: true, upsert: true }
-        );
+        const location = await LocationModel.findById(locationId);
+        if (!location) {
+            return res.status(404).json({ message: "Location not found" });
+        }
 
-        const newLocation = new LocationModel({
-            locationId: counter.seq,
-            humanReadableName,
-            address,
-            phone,
-            multipleADevices
-        });
+        location.devices.push(savedDevice._id);
+        await location.save();
 
-        const savedLocation = await newLocation.save();
-        res.json(savedLocation);
+        res.json(savedDevice);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
 exports.getAllLocation = async (req, res) => {
     try {
         const locations = await LocationModel.find();
