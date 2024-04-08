@@ -1,6 +1,7 @@
 const LocationModel = require("../models/LocationModel");
 const CounterModel = require("../models/CounterModel");
-const { GetDeviceInLocation } = require('../controllers/deviceController');
+const { CheckDeviceInLocation } = require("../controllers/deviceController");
+const deviceController = require("../controllers/deviceController")
 
 exports.createLocation = async (req, res) => {
     try {
@@ -33,20 +34,16 @@ exports.createLocation = async (req, res) => {
     }
 };
 // create location  ok
-
-
-
 exports.deleteLocation = async (req, res) => {
     try {
         const { locationId } = req.body;
 
         const existingLocation = await LocationModel.findOne({ locationId });
-//TODO: Location delete susses, Delete First check if the device in this location exists
-//        const DeviceExists = await GetDeviceInLocation(locationId);
-
-//        if (DeviceExists) {
-//            return res.status(404).json({ message: "Devices in location" });
-//        }
+        const DeviceExists = await deviceController.CheckDeviceInLocation(locationId);
+        if (DeviceExists) {
+            console.log("Invalid locationId");
+            return res.status(404).json({ message: "Device in location"});
+        }
 
         if (existingLocation) {
             await LocationModel.deleteOne({ locationId });
@@ -68,19 +65,6 @@ exports.getAllLocations = async (req, res) => {
     }
 };// is correct
 
-//exports.validLocation = async (locationId) => {
-//    try {
-//        const checkLocation = await LocationModel.findOne({ locationId });
-//        return !!checkLocation;
-//    } catch (error) {
-//        throw new Error(error.message);
-//    }
-//};
-
-
-
-
-// Define the function to validate location
 exports.validLocation = async (locationId) => {
     try {
         const checkLocation = await LocationModel.findOne({ locationId });
