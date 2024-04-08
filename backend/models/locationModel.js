@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const locationSchema = new mongoose.Schema({
     locationId: {
-        type: Number,
+        type: String,
         required: true
     },
 

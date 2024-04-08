@@ -1,81 +1,96 @@
 const DeviceModel = require("../models/DeviceModel");
+const { validLocation } = require('../controllers/locationController');
 const LocationModel = require("../models/LocationModel");
 const mongoose = require('mongoose');
 
 exports.createDevice = async (req, res) => {
     try {
         const { uniqueSerialNumber, type, image, status, locationId } = req.body;
+        console.log(locationId);
+//TODO: create the device first checking the valid location
+//        const locationExists = await validLocation(locationId);
+//
+//        if (!locationExists) {
+//            console.log("Invalid locationId");
+//            return res.status(404).json({ message: "Invalid locationId" });
+//        }
 
-        if (!uniqueSerialNumber || !type || !image || !status || !locationId) {
-            return res.status(400).json({ message: "All fields are required" });
-
-        }
-
+        console.log("Location is valid");
         const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber });
         if (existingDevice) {
+            console.log("Device with this serial number already exists");
             return res.status(401).json({ message: "uniqueSerialNumber already exists" });
         }
-        const newDevice = new DeviceModel({ uniqueSerialNumber, type, image, status, locationId });
+
+        const newDevice = new DeviceModel({
+            uniqueSerialNumber,
+            type,
+            image,
+            status,
+            locationId,
+        });
 
         const savedDevice = await newDevice.save();
-        const location = await LocationModel.findById(locationId);
-        if (!location) {
-            return res.status(404).json({ message: "Location not found" });
-        }
+        console.log("Device created successfully");
 
-        location.devices.push(savedDevice._id);
-        await location.save();
 
-        res.status(201).json(savedDevice);
+        res.json(savedDevice);
     } catch (error) {
-
-        console.error("Error in createDevice:", error);
-        res.status(500).json({ error: "Internal server error" });
+        console.error("Error creating device:", error);
+        res.status(500).json({ error: error.message });
     }
 };
 
+
+
 exports.getAllDevice = async (req, res) => {
     try {
-        const device = await DeviceModel.find();
-        res.json(device);
+        const devices = await DeviceModel.find();
+        res.json(devices);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
-exports.deleteDevice = async (req, res) => {
-console.log("deleteDevice");
-    try {
-    console.log("try");
-        const existingDevice = await DeviceModel.findOne({id : req.body.id , uniqueSerialNumber: req.body.uniqueSerialNumber});
+// getAllDevice is ok
 
-        if (existingDevice){
-            await DeviceModel.deleteOne({id : req.body.id})
-//            res.status().json("Unautho");
-            res.status(200).json(await DeviceModel.find({uniqueSerialNumber : req.body.uniqueSerialNumber}));
-        }else {
+
+exports.deleteDevice = async (req, res) => {
+    try {
+        console.log("deleteDevice-try");
+        const { uniqueSerialNumber  } = req.body;
+
+        const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber:  uniqueSerialNumber });
+
+        if (existingDevice) {
+            await DeviceModel.deleteOne({ uniqueSerialNumber: uniqueSerialNumber });
+            const remainingDevice = await DeviceModel.find({ uniqueSerialNumber });
+            return res.status(200).json(remainingDevice);
+        } else {
             res.status(403).json("Unauthorized");
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
-exports.getDevicesInLocation = async (req, res) => {
-    try {
-        const { locationId } = req.params;
+//   ............. delete Device is ok
 
-        // Find the location by its ID
-        const location = await LocationModel.findById(locationId).populate('devices');
 
-        if (!location) {
-            res.status(404).json({ message: "Location not found" });
-        }
 
-        // Extract the devices associated with the location
-        const devices = location.devices;
 
-        res.json(devices);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
+////
+//exports.getDevicesInLocation = async (req, res) => {
+//    try {
+//        const { locationId } = req.params;
+//
+//        const location = await LocationModel.findById(locationId).populate('devices');
+//
+//        if (!location) {
+//            return res.status(404).json({ message: "Location not found" });
+//        }
+//
+//        const devices = location.devices;
+//        res.json(devices);
+//    } catch (error) {
+//        res.status(500).json({ error: error.message });
+//    }
+//};

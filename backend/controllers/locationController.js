@@ -1,56 +1,75 @@
 const LocationModel = require("../models/LocationModel");
 const CounterModel = require("../models/CounterModel");
+const { GetDeviceInLocation } = require('../controllers/deviceController');
 
-
-exports.createDevice = async (req, res) => {
+exports.createLocation = async (req, res) => {
     try {
-        const { uniqueSerialNumber, type, image, status, locationId } = req.body;
+        const { humanReadableName, address, phone, multipleADevices } = req.body;
 
-        const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber });
-        if (existingDevice) {
-            return res.status(401).json({ message: "uniqueSerialNumber already exists" });
+        const existingLocation = await LocationModel.findOne({ humanReadableName });
+
+        if (existingLocation) {
+            return res.status(401).json({ message: "Location already exists" });
         }
 
-        const newDevice = new DeviceModel({ uniqueSerialNumber, type, image, status, locationId });
-        const savedDevice = await newDevice.save();
+        const counter = await CounterModel.findOneAndUpdate(
+            { _id: "locationId" },
+            { $inc: { seq: 1 } },
+            { new: true, upsert: true }
+        );
 
-        const location = await LocationModel.findById(locationId);
-        if (!location) {
+        const newLocation = new LocationModel({
+            locationId: counter.seq,
+            humanReadableName,
+            address,
+            phone,
+            multipleADevices
+        });
+
+        const savedLocation = await newLocation.save();
+        res.json(savedLocation);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+// create location  ok
+exports.deleteLocation = async (req, res) => {
+    try {
+        const { locationId } = req.body;
+
+        const existingLocation = await LocationModel.findOne({ locationId });
+//TODO: Location delete susses, Delete First check if the device in this location exists
+//        const DeviceExists = await GetDeviceInLocation(locationId);
+
+//        if (DeviceExists) {
+//            return res.status(404).json({ message: "Devices in location" });
+//        }
+
+        if (existingLocation) {
+            await LocationModel.deleteOne({ locationId });
+            return res.status(200).json({ message: "Location deleted successfully" });
+        } else {
             return res.status(404).json({ message: "Location not found" });
         }
-
-        location.devices.push(savedDevice._id);
-        await location.save();
-
-        res.json(savedDevice);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
-exports.getAllLocation = async (req, res) => {
+exports.getAllLocations = async (req, res) => {
     try {
         const locations = await LocationModel.find();
         res.json(locations);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-};
-exports.deleteLocation = async (req, res) => {
+};// is correct
+
+exports.validLocation = async (locationId) => {
     try {
-        console.log("deleteLocation-try");
-        const { id, humanReadableName } = req.body;
-
-        const existingLocation = await LocationModel.findOne({ id: id, humanReadableName });
-
-        if (existingLocation) {
-            await LocationModel.deleteOne({ id: id });
-            const remainingLocations = await LocationModel.find({ humanReadableName });
-            return res.status(200).json(remainingLocations);
-        } else {
-            res.status(403).json("Unauthorized");
-        }
+        const checkLocation = await LocationModel.findOne({ locationId });
+        return !!checkLocation;
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        throw new Error(error.message);
     }
 };
