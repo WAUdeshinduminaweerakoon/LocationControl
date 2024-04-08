@@ -3,25 +3,67 @@ const { validLocation } = require('../controllers/locationController');
 const LocationModel = require("../models/LocationModel");
 const mongoose = require('mongoose');
 
+//exports.createDevice = async (req, res) => {
+//    try {
+//        const { uniqueSerialNumber, type, image, status, locationId } = req.body;
+//        console.log(locationId);
+////TODO: create the device first checking the valid location
+////        const locationExists = await validLocation(locationId);
+////
+////        if (!locationExists) {
+////            console.log("Invalid locationId");
+////            return res.status(404).json({ message: "Invalid locationId" });
+////        }
+//
+//        console.log("Location is valid");
+//        const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber });
+//        if (existingDevice) {
+//            console.log("Device with this serial number already exists");
+//            return res.status(401).json({ message: "uniqueSerialNumber already exists" });
+//        }
+//
+//        const newDevice = new DeviceModel({
+//            uniqueSerialNumber,
+//            type,
+//            image,
+//            status,
+//            locationId,
+//        });
+//
+//        const savedDevice = await newDevice.save();
+//        console.log("Device created successfully");
+//
+//
+//        res.json(savedDevice);
+//    } catch (error) {
+//        console.error("Error creating device:", error);
+//        res.status(500).json({ error: error.message });
+//    }
+//};
+
 exports.createDevice = async (req, res) => {
     try {
         const { uniqueSerialNumber, type, image, status, locationId } = req.body;
         console.log(locationId);
-//TODO: create the device first checking the valid location
-//        const locationExists = await validLocation(locationId);
-//
-//        if (!locationExists) {
-//            console.log("Invalid locationId");
-//            return res.status(404).json({ message: "Invalid locationId" });
-//        }
+
+        // Check if the locationId is valid
+        const locationExists = await validLocation(locationId);
+
+        if (!locationExists) {
+            console.log("Invalid locationId");
+            return res.status(404).json({ message: "Invalid locationId" });
+        }
 
         console.log("Location is valid");
+
+        // Check if the device with the given uniqueSerialNumber already exists
         const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber });
         if (existingDevice) {
             console.log("Device with this serial number already exists");
             return res.status(401).json({ message: "uniqueSerialNumber already exists" });
         }
 
+        // Create a new device
         const newDevice = new DeviceModel({
             uniqueSerialNumber,
             type,
@@ -30,9 +72,9 @@ exports.createDevice = async (req, res) => {
             locationId,
         });
 
+        // Save the new device
         const savedDevice = await newDevice.save();
         console.log("Device created successfully");
-
 
         res.json(savedDevice);
     } catch (error) {
@@ -40,7 +82,6 @@ exports.createDevice = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 
 
 exports.getAllDevice = async (req, res) => {

@@ -33,6 +33,9 @@ exports.createLocation = async (req, res) => {
     }
 };
 // create location  ok
+
+
+
 exports.deleteLocation = async (req, res) => {
     try {
         const { locationId } = req.body;
@@ -65,6 +68,19 @@ exports.getAllLocations = async (req, res) => {
     }
 };// is correct
 
+//exports.validLocation = async (locationId) => {
+//    try {
+//        const checkLocation = await LocationModel.findOne({ locationId });
+//        return !!checkLocation;
+//    } catch (error) {
+//        throw new Error(error.message);
+//    }
+//};
+
+
+
+
+// Define the function to validate location
 exports.validLocation = async (locationId) => {
     try {
         const checkLocation = await LocationModel.findOne({ locationId });
@@ -73,3 +89,5 @@ exports.validLocation = async (locationId) => {
         throw new Error(error.message);
     }
 };
+
+
