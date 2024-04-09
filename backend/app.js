@@ -18,11 +18,8 @@ mongoose.connect(process.env.MONGODB_URL, {
 }).catch((error) => {
     console.error("Error connecting to MongoDB:", error);
 });
-
-
 // Routes
 app.use("/location", locationRoutes);
 app.use("/device", deviceRoutes);
-
 
 module.exports = app;

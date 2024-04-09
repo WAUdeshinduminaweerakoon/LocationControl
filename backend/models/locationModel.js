@@ -6,7 +6,6 @@ const locationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-
     humanReadableName:{
         type: String,
         required: true,

@@ -27,5 +27,4 @@ const deviceSchema = new mongoose.Schema({
     }
 });
 const DeviceModel = mongoose.model('Device', deviceSchema);
-
 module.exports = DeviceModel;

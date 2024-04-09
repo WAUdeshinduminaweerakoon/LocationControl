@@ -6,19 +6,16 @@ const deviceController = require("../controllers/deviceController")
 exports.createLocation = async (req, res) => {
     try {
         const { humanReadableName, address, phone, multipleADevices } = req.body;
-
         const existingLocation = await LocationModel.findOne({ humanReadableName });
 
         if (existingLocation) {
             return res.status(401).json({ message: "Location already exists" });
         }
-
         const counter = await CounterModel.findOneAndUpdate(
             { _id: "locationId" },
             { $inc: { seq: 1 } },
             { new: true, upsert: true }
         );
-
         const newLocation = new LocationModel({
             locationId: counter.seq,
             humanReadableName,

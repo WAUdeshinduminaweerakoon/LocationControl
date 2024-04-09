@@ -10,6 +10,5 @@ const counterSchema = new Schema({
         default: 0 }
 });
 
-
 module.exports = mongoose.model('CounterModel', counterSchema);
 //module.exports = CounterModelModel;

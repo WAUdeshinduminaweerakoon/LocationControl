@@ -104,26 +104,6 @@ exports.deleteDevice = async (req, res) => {
 };
 //   ............. delete Device is ok
 
-
-
-
-////
-//exports.getDevicesInLocation = async (req, res) => {
-//    try {
-//        const { locationId } = req.params;
-//
-//        const location = await LocationModel.findById(locationId).populate('devices');
-//
-//        if (!location) {
-//            return res.status(404).json({ message: "Location not found" });
-//        }
-//
-//        const devices = location.devices;
-//        res.json(devices);
-//    } catch (error) {
-//        res.status(500).json({ error: error.message });
-//    }
-//};
 exports.CheckDeviceInLocation = async (locationId) => {
     try {
         const checkDevice = await DeviceModel.findOne({ locationId });
