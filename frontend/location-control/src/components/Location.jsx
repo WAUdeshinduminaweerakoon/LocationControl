@@ -14,7 +14,7 @@ const Location = () => {
         </div>
         <div className="p-4">
           <h3 className="p-2 text-2xl text-rose-900 md:text-3xl">" View All Location"</h3>
-          <Link to="/AddtheLocation" className="p-1 m-6 text-2xl bg-orange-600 rounded-lg text-stone-800 hover:text-gray-300 md:text-3xl">View</Link>
+          <Link to="/LocationList" className="p-1 m-6 text-2xl bg-orange-600 rounded-lg text-stone-800 hover:text-gray-300 md:text-3xl">View</Link>
         </div>
       </div>
     </div>

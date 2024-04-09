@@ -4,7 +4,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Device from "./components/Device";
-import AddtheLocation from "./components/AddtheLocation";
+import AddtheLocation from "./form/AddtheLocation";
+import LocationList from "./list/LocationList";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/location" element={<Location/>}/>
           <Route path="/Device" element={<Device/>}/>
           <Route path="/AddtheLocation" element={<AddtheLocation/>}/>
+          <Route path="/LocationList" element={<LocationList/>}/>
         </Routes>
         <Footer/>
       </div> 
