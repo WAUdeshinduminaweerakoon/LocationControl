@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Device from "./components/Device";
+import AddtheLocation from "./components/AddtheLocation";
 
 
 function App() {
@@ -12,9 +13,10 @@ function App() {
       <div  className="flex flex-col h-screen bg-gradient-to-r from-violet-900 to-fuchsia-950 brightness-100 ">
         <Header/>
         <Routes>
-        <Route path='/' element={<Home/>}></Route>
+        <Route path="/" element={<Home/>}></Route>
           <Route path="/location" element={<Location/>}/>
           <Route path="/Device" element={<Device/>}/>
+          <Route path="/AddtheLocation" element={<AddtheLocation/>}/>
         </Routes>
         <Footer/>
       </div> 
