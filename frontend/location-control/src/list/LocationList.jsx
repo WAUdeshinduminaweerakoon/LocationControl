@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const LocationList = () => {
   const [locations, setLocations] = useState([]);
@@ -48,11 +49,18 @@ const LocationList = () => {
    
     <div className="p-4 overflow-x-auto ">
   <h2 className="mb-4 text-2xl font-bold">All Locations</h2>
-  {deleteMessage && (
+       {deleteMessage && (
         <div className="p-4 mb-4 bg-gray-100 rounded-lg">
           <p className="text-red-500">{deleteMessage}</p>
         </div>
       )}
+      <div className="p-4 mb-4 bg-gray-100 rounded-lg">
+      <div className="p-4">
+          <h3 className="p-2 text-xl text-rose-900 md:text-3xl">Add the Location</h3>
+          <Link to="/AddtheLocation" className="p-1 m-6 text-xl bg-orange-600 rounded-lg text-stone-800 hover:text-gray-300 md:text-3xl">Add</Link>
+        </div>
+      </div>
+
   <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
     <table className="min-w-full divide-y divide-gray-200">
       <thead className="bg-gray-50">

@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const CreateLocationForm = () => {
+
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
     humanReadableName: '',
     address: '',
@@ -24,6 +29,7 @@ const CreateLocationForm = () => {
         phone: '',
         multipleADevices: []
       });
+      navigate('/LocationList');
     } catch (error) {
       console.error('Error creating location:', error);
     }
@@ -65,12 +71,15 @@ const CreateLocationForm = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
             required
           />
-        </div>
-
+        </div >
+        
         <button type="submit" className="items-center justify-center px-4 py-2 font-semibold text-purple-900 bg-white rounded-md hover:bg-purple-700 hover:text-white">Create Location</button>
+        <button type="submit" className="items-center justify-center px-4 py-2 font-semibold text-purple-900 bg-white rounded-md hover:bg-purple-700 hover:text-white"><Link to="/LocationList">View Location</Link></button>
       </form>
     </div>
   );
 };
 
 export default CreateLocationForm;
+
+// TODO : Backend  message 
