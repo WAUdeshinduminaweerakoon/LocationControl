@@ -6,6 +6,8 @@ import Home from "./components/Home";
 import Device from "./components/Device";
 import AddtheLocation from "./form/AddtheLocation";
 import LocationList from "./list/LocationList";
+import AddtheDevice from "./form/AddtheDevice";
+import DeviceList from "./list/DeviceList";
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
           <Route path="/Device" element={<Device/>}/>
           <Route path="/AddtheLocation" element={<AddtheLocation/>}/>
           <Route path="/LocationList" element={<LocationList/>}/>
+          <Route path="/AddtheDevice" element={<AddtheDevice/>}/>
+          <Route path="/DeviceList" element={<DeviceList/>}/>
         </Routes>
         <Footer/>
       </div> 
