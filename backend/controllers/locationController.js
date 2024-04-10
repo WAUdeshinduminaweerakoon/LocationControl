@@ -39,7 +39,7 @@ exports.deleteLocation = async (req, res) => {
         const DeviceExists = await deviceController.CheckDeviceInLocation(locationId);
         if (DeviceExists) {
             console.log("Invalid locationId");
-            return res.status(404).json({ message: "Device in location"});
+            return res.status(404).json({ message: "There are devices associated with this location. Delete them first."});
         }
 
         if (existingLocation) {
