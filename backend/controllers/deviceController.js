@@ -63,9 +63,9 @@ exports.deleteDevice = async (req, res) => {
         if (existingDevice) {
             await DeviceModel.deleteOne({ uniqueSerialNumber: uniqueSerialNumber });
             const remainingDevice = await DeviceModel.find({ uniqueSerialNumber });
-            return res.status(200).json(remainingDevice);
+            return res.status(200).json({ message: "Device deleted successfully" });
         } else {
-            res.status(403).json("Unauthorized");
+            res.status(403).json({message:"Unauthorized"});
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
