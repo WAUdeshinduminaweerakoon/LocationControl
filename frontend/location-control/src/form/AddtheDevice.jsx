@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AddtheDevice = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const AddtheDevice = () => {
     uniqueSerialNumber: '',
     type: '',
     image: '',
-    status: 'active',
+    status: '',
     locationId: ''
   });
 
@@ -41,7 +42,7 @@ const AddtheDevice = () => {
         uniqueSerialNumber: '',
         type: '',
         image: '',
-        status: 'active',
+        status: '',
         locationId: ''
       });
       navigate('/DeviceList');
@@ -67,14 +68,17 @@ const AddtheDevice = () => {
         </div>
         <div>
           <label className="block text-white">Type:</label>
-          <input
-            type="text"
+          <select
             name="type"
             value={formData.type}
             onChange={handleChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
             required
-          />
+          >
+            <option value="pos">POS</option>
+            <option value="kiosk">KIOSK</option>
+            <option value="signage">SIGNAGE</option>
+          </select>
         </div>
         <div>
           <label className="block text-white">Image:</label>
@@ -117,6 +121,7 @@ const AddtheDevice = () => {
         </div>
 
         <button type="submit" className="items-center justify-center px-4 py-2 font-semibold text-purple-900 bg-white rounded-md hover:bg-purple-700 hover:text-white">Create Device</button>
+        <button type="submit" className="items-center justify-center px-4 py-2 font-semibold text-purple-900 bg-white rounded-md hover:bg-purple-700 hover:text-white"><Link to="/DeviceList">View Device</Link></button>
       </form>
     </div>
   );
