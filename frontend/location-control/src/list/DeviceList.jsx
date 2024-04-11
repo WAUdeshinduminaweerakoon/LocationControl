@@ -24,22 +24,25 @@ const DeviceList = () => {
       const response = await axios.post('http://localhost:3001/device/delete-device', {
         uniqueSerialNumber: uniqueSerialNumber,
       });
-      if (response && response.data) {
+      if (response.status === 200) {
         setDevices(prevDevices => prevDevices.filter(device => device.uniqueSerialNumber !== uniqueSerialNumber));
         setDeleteMessage(response.data.message);
       } else {
-        setDeleteMessage('Error deleting device: No response received from the server.');
+
+        setDeleteMessage('Error deleting device: ' + response.data.message);
       }
       setTimeout(() => {
         setDeleteMessage('');
       }, 1000);
     } catch (error) {
+
       setDeleteMessage('Error deleting device: ' + error.response.data.message);
       setTimeout(() => {
         setDeleteMessage('');
       }, 1000);
     }
   };
+  
 
   return (
     <div className="p-4 overflow-x-auto">
