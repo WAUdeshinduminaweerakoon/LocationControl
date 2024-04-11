@@ -29,12 +29,19 @@ const AddtheDevice = () => {
     fetchLocationIds();
   }, []);
 
+  const [error, setError] = useState('');
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+     
+  if (!formData.uniqueSerialNumber || !formData.type || !formData.image || !formData.status || !formData.locationId) {
+    setError('Please fill in all required fields');
+    return;
+  }
     try {
       const response = await axios.post('http://localhost:3001/device', formData); 
       console.log('Device created:', response.data);
