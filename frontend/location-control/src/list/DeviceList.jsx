@@ -48,17 +48,23 @@ const DeviceList = () => {
 
   return (
     <div className="w-full p-4 overflow-x-auto">
-  <h2 className="mb-4 text-2xl font-bold">All Devices</h2>
+ <    div className='flex items-center justify-center'>
+        <h2 className="mb-4 text-2xl font-bold">All Device</h2>
+    </div>
+
   {deleteMessage && (
     <div className="p-4 mb-4 bg-gray-100 rounded-lg">
       <p className="text-red-500">{deleteMessage}</p>
     </div>
   )}
-  <div className="p-4 mb-4 bg-gray-100 rounded-lg">
-    <div className="p-4">
-      <h3 className="p-2 text-xl text-rose-900 md:text-3xl">Add the Device</h3>
-      <Link to="/AddtheDevice" className="p-1 m-6 text-xl bg-orange-600 rounded-lg text-stone-800 hover:text-gray-300 md:text-3xl">Add</Link>
+  <div className="p-2 mb-1 bg-gray-100 rounded-lg">
+    <div className="flex items-center justify-between p-1 pl-5 pr-5">
+      <h3 className="p-1 text-xl text-rose-900 md:text-xl">Add the Device</h3>
+      <Link to="/AddtheDevice" className="p-1 m-2 text-xl bg-orange-600 rounded-lg text-stone-800 hover:text-gray-300 md:text-xl">Add</Link>
     </div>
+
+   
+
   </div>
   <div className="max-w-full overflow-x-auto">
     <table className="min-w-full divide-y divide-gray-200">
