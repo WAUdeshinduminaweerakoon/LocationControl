@@ -15,7 +15,9 @@ const AddtheDevice = () => {
   });
 
   const [locationIds, setLocationIds] = useState([]);
-  
+  const [error, setError] = useState('');
+  const [backendMessage, setBackendMessage] = useState('');
+
   useEffect(() => {
     const fetchLocationIds = async () => {
       try {
@@ -29,8 +31,6 @@ const AddtheDevice = () => {
     fetchLocationIds();
   }, []);
 
-  const [error, setError] = useState('');
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -38,13 +38,17 @@ const AddtheDevice = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
      
-  if (!formData.uniqueSerialNumber || !formData.type || !formData.image || !formData.status || !formData.locationId) {
-    setError('Please fill in all required fields');
-    return;
-  }
+    if (!formData.uniqueSerialNumber || !formData.type || !formData.image || !formData.status || !formData.locationId) {
+      setError('Please fill in all required fields');
+      return;
+    }
     try {
       const response = await axios.post('http://localhost:3001/device', formData); 
       console.log('Device created:', response.data);
+      setBackendMessage('Device created successfully');
+      setTimeout(() => {
+        setBackendMessage('');
+      }, 60000); // 1 minute
       setFormData({
         uniqueSerialNumber: '',
         type: '',
@@ -52,9 +56,11 @@ const AddtheDevice = () => {
         status: '',
         locationId: ''
       });
+      setError('');
       navigate('/DeviceList');
     } catch (error) {
       console.error('Error creating device:', error);
+      setError(error.response.data.message);
     }
   };
 
@@ -82,6 +88,7 @@ const AddtheDevice = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
             required
           >
+            <option value="">Select Type</option>
             <option value="pos">POS</option>
             <option value="kiosk">KIOSK</option>
             <option value="signage">SIGNAGE</option>
@@ -122,6 +129,7 @@ const AddtheDevice = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
             required
           >
+            <option value="">Select Status</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
@@ -130,6 +138,16 @@ const AddtheDevice = () => {
         <button type="submit" className="items-center justify-center px-4 py-2 font-semibold text-purple-900 bg-white rounded-md hover:bg-purple-700 hover:text-white">Create Device</button>
         <button type="submit" className="items-center justify-center px-4 py-2 font-semibold text-purple-900 bg-white rounded-md hover:bg-purple-700 hover:text-white"><Link to="/DeviceList">View Device</Link></button>
       </form>
+      {error && (
+        <div className="mt-4 text-red-500">
+          {error}
+        </div>
+      )}
+      {backendMessage && (
+        <div className="mt-4 text-green-500">
+          {backendMessage}
+        </div>
+      )}
     </div>
   );
 };

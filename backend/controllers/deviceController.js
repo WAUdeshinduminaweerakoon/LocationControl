@@ -32,7 +32,7 @@ exports.createDevice = async (req, res) => {
         const savedDevice = await newDevice.save();
         console.log("Device created successfully");
 
-        res.json(savedDevice);
+         return res.status(200).json({ message: "Device created successfully", device: savedDevice });
     } catch (error) {
         console.error("Error creating device:", error);
         res.status(500).json({ error: error.message });
@@ -55,7 +55,7 @@ exports.getAllDevice = async (req, res) => {
 
 exports.deleteDevice = async (req, res) => {
     try {
-        console.log("deleteDevice-try");
+        //console.log("deleteDevice-try");
         const { uniqueSerialNumber  } = req.body;
 
         const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber:  uniqueSerialNumber });
@@ -83,25 +83,25 @@ exports.getAllDevice = async (req, res) => {
 };
 // getAllDevice is ok
 
-
-exports.deleteDevice = async (req, res) => {
-    try {
-        console.log("deleteDevice-try");
-        const { uniqueSerialNumber  } = req.body;
-
-        const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber:  uniqueSerialNumber });
-
-        if (existingDevice) {
-            await DeviceModel.deleteOne({ uniqueSerialNumber: uniqueSerialNumber });
-            const remainingDevice = await DeviceModel.find({ uniqueSerialNumber });
-            return res.status(200).json(remainingDevice);
-        } else {
-            res.status(403).json("Unauthorized");
-        }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
+//
+//exports.deleteDevice = async (req, res) => {
+//    try {
+//        console.log("deleteDevice-try");
+//        const { uniqueSerialNumber  } = req.body;
+//
+//        const existingDevice = await DeviceModel.findOne({ uniqueSerialNumber:  uniqueSerialNumber });
+//
+//        if (existingDevice) {
+//            await DeviceModel.deleteOne({ uniqueSerialNumber: uniqueSerialNumber });
+//            const remainingDevice = await DeviceModel.find({ uniqueSerialNumber });
+//            return res.status(200).json(remainingDevice);
+//        } else {
+//            res.status(403).json("Unauthorized");
+//        }
+//    } catch (error) {
+//        res.status(500).json({ error: error.message });
+//    }
+//};
 //   ............. delete Device is ok
 
 exports.CheckDeviceInLocation = async (locationId) => {

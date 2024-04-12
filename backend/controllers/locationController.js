@@ -30,6 +30,7 @@ exports.createLocation = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 // create location  ok
 exports.deleteLocation = async (req, res) => {
     try {
