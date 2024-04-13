@@ -104,5 +104,3 @@ const CreateLocationForm = () => {
 };
 
 export default CreateLocationForm;
-
-// TODO : Backend  message 
