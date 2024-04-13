@@ -5,7 +5,6 @@ import Homeimg from "../Image/Home.png";
 const Home = () => {
   return (
     <div className="grid grid-cols-1 p-10 md:grid-cols-2 bg-gradient-to-r from-violet-900 to-fuchsia-950 brightness-100"> 
-      
       <div className="flex items-center justify-center col-span-1 md:col-span-1"> 
         <div className="object-cover object-center p-5 bg-white border-2 border-black rounded-full h-85 w-85 md:h-95 md:w-95">
           <img src={Homeimg} alt="Homeimg" className="object-cover object-center border-2 border-black rounded-full h-80 w-80 md:h-90 md:w-90" />

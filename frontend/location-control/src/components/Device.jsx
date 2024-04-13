@@ -13,7 +13,6 @@ const Location = () => {
     <div className="col-span-1 md:col-span-1"> 
   <div className="m-auto md:mt-20">
     <h1 className="text-5xl text-gray-100 md:text-6xl">Device Control</h1>
-    
     <div className="flex items-center justify-between p-1 pl-5 pr-5 mt-5">
       <h3 className="p-1 text-xl text-lime-200 md:text-3xl">Add the Device</h3>
       <Link to="/AddtheDevice" className="p-1 m-2 text-xl bg-orange-600 rounded-lg text-stone-800 hover:text-gray-300 md:text-2xl">Add</Link>

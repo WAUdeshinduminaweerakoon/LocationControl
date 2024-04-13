@@ -24,9 +24,7 @@ const Location = () => {
   </div>
 </div>
 </div>
-
   );
 };
 
 export default Location
-//TODO: operation for displaying location details about all stored locations

@@ -38,8 +38,7 @@ const LocationList = () => {
 
 
     } catch (error) {
-    //   console.error('Error deleting location:', error);
-      setDeleteMessage('Error deleting location: ' + error.response.data.message);
+        setDeleteMessage('Error deleting location: ' + error.response.data.message);
     }
     setTimeout(() => {
         setDeleteMessage('');
@@ -50,10 +49,8 @@ const LocationList = () => {
    
     <div className="p-4 overflow-x-auto ">
        <div className='flex items-center justify-center'>
-  <h2 className="mb-4 text-3xl font-bold text-yellow-100">All Locations</h2>
-</div>
-
-    
+            <h2 className="mb-4 text-3xl font-bold text-yellow-100">All Locations</h2>
+       </div>
     {deleteMessage && (
       <div className="p-4 mb-4 bg-gray-100 rounded-lg">
         <p className="text-red-500">{deleteMessage}</p>

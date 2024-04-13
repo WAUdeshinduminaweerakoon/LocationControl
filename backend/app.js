@@ -8,8 +8,6 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-//console.log("eeeeeeeeeeeeee")
-// MongoDB connection
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -18,7 +16,6 @@ mongoose.connect(process.env.MONGODB_URL, {
 }).catch((error) => {
     console.error("Error connecting to MongoDB:", error);
 });
-// Routes
 app.use("/location", locationRoutes);
 app.use("/device", deviceRoutes);
 

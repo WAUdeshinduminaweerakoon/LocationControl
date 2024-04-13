@@ -45,7 +45,6 @@ const DeviceList = () => {
     }
   };
   
-
   return (
     <div className="w-full p-4 overflow-x-auto">
  <    div className='flex items-center justify-center'>
@@ -62,9 +61,6 @@ const DeviceList = () => {
       <h3 className="p-1 text-xl text-rose-900 md:text-xl">Add the Device</h3>
       <Link to="/AddtheDevice" className="p-1 m-2 text-xl bg-orange-600 rounded-lg text-stone-800 hover:text-gray-300 md:text-xl">Add</Link>
     </div>
-
-   
-
   </div>
   <div className="max-w-full overflow-x-auto">
     <table className="min-w-full divide-y divide-gray-200">
@@ -106,11 +102,8 @@ const DeviceList = () => {
       </tbody>
     </table>
   </div>
-</div>
-
-
-          
-          );
+</div>         
+ );
 };
 
 export default DeviceList;
