@@ -13,7 +13,7 @@ import DeviceList from "./list/DeviceList";
 function App() {
   return (
     <BrowserRouter>
-      <div  className="flex flex-col h-screen bg-gradient-to-r from-violet-900 to-fuchsia-950 brightness-100 ">
+      <div  className="flex flex-col w-full h-screen bg-gradient-to-r from-violet-900 to-fuchsia-950 brightness-100">
         <Header/>
         <Routes>
         <Route path="/" element={<Home/>}></Route>

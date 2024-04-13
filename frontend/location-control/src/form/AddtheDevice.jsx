@@ -45,10 +45,10 @@ const AddtheDevice = () => {
     try {
       const response = await axios.post('http://localhost:3001/device', formData); 
       console.log('Device created:', response.data);
-      setBackendMessage('Device created successfully');
+      setBackendMessage(response.data);
       setTimeout(() => {
         setBackendMessage('');
-      }, 60000); // 1 minute
+      }, 2000);
       setFormData({
         uniqueSerialNumber: '',
         type: '',
@@ -61,6 +61,9 @@ const AddtheDevice = () => {
     } catch (error) {
       console.error('Error creating device:', error);
       setError(error.response.data.message);
+      setTimeout(() => {
+        setError('');
+      }, 2000); 
     }
   };
 
@@ -68,6 +71,19 @@ const AddtheDevice = () => {
     <div className="max-w-md px-10 mx-auto mt-8 bg-gradient-to-r from-purple-600 to-purple-900 py-7 rounded-xl">
       <h2 className="mb-4 text-2xl font-bold text-white">Create Device</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className='bg-white rounded-xl' >
+            <div className="m-6 font-bold text-red-500 rounded-xl">
+          {error}
+        </div>
+        </div>
+        
+      )}
+      {backendMessage && (
+        <div className="mt-4 text-green-500">
+          {backendMessage}
+        </div>
+      )}
         <div>
           <label className="block text-white">Unique Serial Number:</label>
           <input
@@ -138,16 +154,7 @@ const AddtheDevice = () => {
         <button type="submit" className="items-center justify-center px-4 py-2 font-semibold text-purple-900 bg-white rounded-md hover:bg-purple-700 hover:text-white">Create Device</button>
         <button type="submit" className="items-center justify-center px-4 py-2 font-semibold text-purple-900 bg-white rounded-md hover:bg-purple-700 hover:text-white"><Link to="/DeviceList">View Device</Link></button>
       </form>
-      {error && (
-        <div className="mt-4 text-red-500">
-          {error}
-        </div>
-      )}
-      {backendMessage && (
-        <div className="mt-4 text-green-500">
-          {backendMessage}
-        </div>
-      )}
+      
     </div>
   );
 };

@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 const CreateLocationForm = () => {
 
   const navigate = useNavigate()
+  const [error, setError] = useState('');
+  const [backendMessage, setBackendMessage] = useState('');
 
   const [formData, setFormData] = useState({
     humanReadableName: '',
@@ -23,15 +25,23 @@ const CreateLocationForm = () => {
     try {
       const response = await axios.post('http://localhost:3001/location', formData);
       console.log('Location created:', response.data);
+      setTimeout(() => {
+        setBackendMessage(response.data);
+      }, 2000);
       setFormData({
         humanReadableName: '',
         address: '',
         phone: '',
         multipleADevices: []
       });
+      setError('');
       navigate('/LocationList');
     } catch (error) {
       console.error('Error creating location:', error);
+      setError(error.response.data.message);
+      setTimeout(() => {
+        setError('');
+      }, 2000); 
     }
   };
 
@@ -39,6 +49,19 @@ const CreateLocationForm = () => {
     <div className="max-w-md px-10 mx-auto mt-8 bg-gradient-to-r from-purple-600 to-purple-900 py-7 rounded-xl">
       <h2 className="mb-4 text-2xl font-bold text-white">Create Location</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className='bg-white rounded-xl' >
+            <div className="m-6 font-bold text-red-500 rounded-xl">
+          {error}
+        </div>
+        </div>
+        
+      )}
+      {backendMessage && (
+        <div className="mt-4 text-green-500">
+          {backendMessage}
+        </div>
+      )}
         <div>
           <label className="block text-white">Human Readable Name:</label>
           <input

@@ -49,7 +49,7 @@ const DeviceList = () => {
   return (
     <div className="w-full p-4 overflow-x-auto">
  <    div className='flex items-center justify-center'>
-        <h2 className="mb-4 text-2xl font-bold">All Device</h2>
+        <h2 className="mb-4 text-3xl font-bold text-yellow-100">All Device</h2>
     </div>
 
   {deleteMessage && (
@@ -93,7 +93,7 @@ const DeviceList = () => {
       <tbody className="bg-white divide-y divide-gray-200">
         {devices.map(device => (
           <tr key={device.uniqueSerialNumber}>
-            <td className="px-2 py-2 text-xs md:px-4 lg:px-6">{device.locationId}</td>
+            <td className="px-6 py-2 text-xs md:px-4 lg:px-6">{device.locationId}</td>
             <td className="px-2 py-2 text-xs md:px-4 lg:px-6">{device._id}</td>
             <td className="px-2 py-2 text-xs md:px-4 lg:px-6">{device.uniqueSerialNumber}</td>
             <td className="px-2 py-2 text-xs md:px-4 lg:px-6">{device.type}</td>

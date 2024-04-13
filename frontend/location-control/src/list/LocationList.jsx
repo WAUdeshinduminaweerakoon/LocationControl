@@ -50,7 +50,7 @@ const LocationList = () => {
    
     <div className="p-4 overflow-x-auto ">
        <div className='flex items-center justify-center'>
-  <h2 className="mb-4 text-2xl font-bold">All Locations</h2>
+  <h2 className="mb-4 text-3xl font-bold text-yellow-100">All Locations</h2>
 </div>
 
     
